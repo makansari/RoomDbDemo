@@ -1,0 +1,38 @@
+1. Add the plugins and kapt tool
+
+     implementation "androidx.room:room-runtime:2.2.5"
+       implementation "androidx.room:room-ktx:2.2.5"
+       kapt "androidx.room:room-compiler:2.2.5"
+
+       apply plugin: 'kotlin-kapt'
+
+   2. Create a file to table...
+
+   @Entity
+   class MyEntity {
+
+       @PrimaryKey
+       var id : Int = 0
+
+       @ColumnInfo(name = "name_table")  // if u want to have seperate name for column else it wil tak var nam
+       var name : String = ""
+
+       var age : Int = 0
+   }
+
+   3. Create a DAO Interface
+   @Dao
+   interface MyDAOInterface {
+       @Insert
+       fun saveData(myEntity : MyEntity)
+   }
+
+
+   4. Create a abstract DB class
+
+   @Database(entities = [MyEntity::class],version = 2)
+   abstract  class MyDB : RoomDatabase(){
+
+       abstract  fun myDao() : MyDAOInterface
+   }
+   5. Now go to the MainActivity
